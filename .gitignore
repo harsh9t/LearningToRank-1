@@ -57,3 +57,10 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+data/Readme_TREC_dataset.pdf
+data/README.txt
+data/LETOR-agreement.txt
+data/train.txt
+data/test.txt
+data/eval.out
+data/Eval-Score.pl
