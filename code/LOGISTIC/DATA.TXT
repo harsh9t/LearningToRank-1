@@ -1,3 +1,3 @@
 train=../../data/train.txt
 test=../../data/test.txt
-c=1
+c=0.0001

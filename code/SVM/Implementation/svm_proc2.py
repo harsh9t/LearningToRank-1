@@ -25,7 +25,14 @@ def transform_train(infile, outfile):
     for row in xrange(len(raw_data)):
         sign = int(raw_data[row][0])
         query = int(raw_data[row][1].split(':')[1])
-        row_data = L2norm([float(x.split(':')[1]) for x in raw_data[row][2:-3]])
+        row_data = [float(x.split(':')[1]) for x in raw_data[row][2:-3]]
+        #row_data.append(sum(row_data[1:5])) # sum of dl
+        #row_data.append(sum(row_data[8:12])) # sum of idf
+        row_data.append(sum(row_data[28:32])) # sum of tf
+        #row_data.append(sum(row_data[32:36])) # sum of tfidf
+        row_data.append(row_data[0] + row_data[15] + row_data[19] + row_data[23]) # sum of BM25
+        #row_data.append(row_data[35] * row_data[35]) # tspr2
+        row_data = L2norm(row_data)
         if query not in data:
             data[query] = [[], []]
         data[query][sign].append(row_data)
@@ -44,7 +51,14 @@ def transform_test(infile, outfile):
         raw_data = map(lambda l: l.strip().split(), f.readlines())
     with open(outfile, 'w') as g:
         for raw in raw_data:
-            transformed = L2norm([float(x.split(':')[1]) for x in raw[2:-3]])
+            row_data = [float(x.split(':')[1]) for x in raw[2:-3]]
+            #row_data.append(sum(row_data[1:5])) # sum of dl
+            #row_data.append(sum(row_data[8:12])) # sum of idf
+            row_data.append(sum(row_data[28:32])) # sum of tf
+            #row_data.append(sum(row_data[32:36])) # sum of tfidf
+            row_data.append(row_data[0] + row_data[15] + row_data[19] + row_data[23]) # sum of BM25
+            #row_data.append(row_data[35] * row_data[35]) # tspr2
+            transformed = L2norm(row_data)
             transformed = ['%d:%f' % (1+x[0],x[1]) for x in enumerate(transformed)]
             line = ' '.join(raw[:2] + transformed + raw[-3:])
             g.write('%s\n' % line)

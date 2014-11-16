@@ -64,3 +64,4 @@ data/train.txt
 data/test.txt
 data/eval.out
 data/Eval-Score.pl
+*.zip

@@ -35,11 +35,12 @@ def read_config():
     return d
 
 def L2norm(vector):
+    # return a L2-normalized vector
     s = math.sqrt(reduce(lambda x, y: x + y * y, vector))
     return map(lambda x: x / s, vector)
 
 def read_train_data(filename):
-    # read date, returns the data matrix X and class value y
+    # read training data, returns pairwise data matrix X and class value y
     timeit()
     with open(filename) as f:
         raw_data = map(lambda l: l.strip().split(), f.readlines())
@@ -67,7 +68,7 @@ def read_train_data(filename):
     return np.array(instances), np.array(target)
 
 def read_test_data(filename):
-    # read date, returns the data matrix X and class value y
+    # read testing data, returns data matrix X
     timeit()
     with open(filename) as f:
         raw_data = map(lambda l: l.strip().split(), f.readlines())
@@ -79,7 +80,7 @@ def read_test_data(filename):
     timeit('Test data reading time:')
     return np.array(data)
 
-def train(X, y, eps=None, threshold=0.005, c=1):
+def train(X, y, eps=None, threshold=0.002, c=1):
     # training process, return trained weights
     if eps is None:
         eps = 0.00005
@@ -112,7 +113,7 @@ def train(X, y, eps=None, threshold=0.005, c=1):
     return W
 
 def predict(X, W):
-    # predict process, return predictions
+    # predict process, return weights dot data
     score = X.dot(W)
     return score
 
